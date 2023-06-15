@@ -66,30 +66,25 @@ export class ProcessOrderComponent implements OnInit {
           this.cart = JSON.parse(response.cesta as string);
           for (const product of this.cart) {
             if (!product.quantity) {
-              product.quantity = 1
+              product.quantity = 1;
             }
           }
-          this.initUnits()
-          this.direccionService.getAddressByUserId(this.user.id)
-            .subscribe((response: Direccion[]) => {
-              this.addresses = response
-            })
-          this.formaPagoUsusarioService.getUserPaymentMethodByUserId(this.user.id)
-            .subscribe((response: FormaPagoUsuario[]) => {
-              this.userPaymentMethods = response
-            })
-
-
+          this.initUnits();
+          this.initAddress();
+          this.initUserPaymentMethods();
         })
     }
   }
   onSelectedAddressChange(address: Direccion) {
     this.selectedAddress = address;
     this.isCollapsedAddress = true;
+    this.initAddress();
   }
   onSelectedUserPaymentMethodChange(userPaymentMethod: FormaPagoUsuario) {
     this.selectedUserPaymentMethod = userPaymentMethod;
     this.isCollapsedAddress = true;
+    this.initUserPaymentMethods();
+
   }
 
   priceWithIva(product: Producto): number {
@@ -220,6 +215,18 @@ export class ProcessOrderComponent implements OnInit {
           })
       }
     }
+  }
+  private initAddress() {
+    this.direccionService.getAddressByUserId(this.user.id)
+      .subscribe((response: Direccion[]) => {
+        this.addresses = response
+      })
+  }
+  private initUserPaymentMethods() {
+    this.formaPagoUsusarioService.getUserPaymentMethodByUserId(this.user.id)
+      .subscribe((response: FormaPagoUsuario[]) => {
+        this.userPaymentMethods = response
+      })
   }
 
 }

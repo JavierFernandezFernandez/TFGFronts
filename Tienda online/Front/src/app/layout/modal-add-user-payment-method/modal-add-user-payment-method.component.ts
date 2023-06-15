@@ -111,7 +111,12 @@ export class ModalAddUserPaymentMethodComponent implements OnInit {
   private initFormaPago() {
     this.formaPagoService.getPaymentForms()
       .subscribe((response: FormaPago[]) => {
-        this.paymentMethods = response
+        for (const pm of response) {
+          if (pm.tipo != "Efectivo") {
+            this.paymentMethods.push(pm)
+          }
+
+        }
       })
   }
 }

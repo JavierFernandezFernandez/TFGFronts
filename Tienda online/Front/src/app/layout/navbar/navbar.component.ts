@@ -1,3 +1,4 @@
+import { SearchService } from './../../services/search/search.service';
 import { CategoriaService } from './../../services/categoria/categoria.service';
 import { Categoria } from '../../models/Producto';
 import { Usuario } from 'src/app/models/Usuario';
@@ -17,18 +18,23 @@ export class NavbarComponent implements OnInit {
   delay: boolean = false;
   name: string = '';
   categories: Categoria[] = [];
+  term: string = '';
+  
+
   constructor(
     private layoutService: LayoutService,
     private router: Router,
     private usuarioService: UsuarioService,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private searchService: SearchService
   ) { }
 
   ngOnInit(): void {
+    this.term = this.searchService.getSearchTerm()
     this.layoutService.isLoggedIn
-    .subscribe((isLoggedIn) => {
-      this.isLoggedIn = isLoggedIn;
-    });
+      .subscribe((isLoggedIn) => {
+        this.isLoggedIn = isLoggedIn;
+      });
     this.getName()
     this.getCategories()
   }
@@ -46,7 +52,8 @@ export class NavbarComponent implements OnInit {
   search(therm: HTMLInputElement) {
     therm.value.trim();
     if (therm.value != '') {
-      this.router.navigate([`/search/${therm.value}`]);
+      this.router.navigate([`/`]);
+      setTimeout(()=>this.router.navigate([`/search/${therm.value}`]),0.001)
     }
   }
   private getName() {
@@ -57,7 +64,7 @@ export class NavbarComponent implements OnInit {
         })
     }
   }
-  private getCategories(){
+  private getCategories() {
     this.categoriaService.getCategories()
       .subscribe((response: Categoria[]) => {
         this.categories = response

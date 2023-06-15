@@ -136,7 +136,7 @@ export class PedidosComponent implements OnInit {
         let totalPrice: number = 0;
 
         for (const line of lineasFactura) {
-          const priceMoreIva: string = Number(line.precio + (line.precio / line.iva * 100)).toFixed(2)
+          const priceMoreIva: string = Number(line.precio + (line.precio / line.iva)).toFixed(2)
           lineasFacturaPdf.push(
             [
               line.producto.nombre,
@@ -266,7 +266,7 @@ export class PedidosComponent implements OnInit {
                           width: 'auto',
                           stack: [
                             {
-                              text: totalPrice+'€',
+                              text: totalPrice.toFixed(2) + '€',
                               bold: true,
                               alignment: 'right',
                             },
@@ -277,7 +277,7 @@ export class PedidosComponent implements OnInit {
                               margin: [0, 10, 0, 0],
                             },
                             {
-                              text: totalPrice+'€',
+                              text: totalPrice.toFixed(2) + '€',
                               bold: true,
                               alignment: 'right',
                               margin: [0, 10, 0, 0],

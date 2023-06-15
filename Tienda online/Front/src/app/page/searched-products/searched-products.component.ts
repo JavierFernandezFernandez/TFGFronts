@@ -1,7 +1,9 @@
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { SearchService } from './../../services/search/search.service';
 import { Producto } from 'src/app/models/Producto';
 import { ProductoService } from '../../services/producto/producto.service';
-import { Component, OnInit } from '@angular/core';
-import { catchError } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Subject, catchError, debounceTime } from 'rxjs';
 import { Usuario } from 'src/app/models/Usuario';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import { Router } from '@angular/router';
@@ -17,10 +19,24 @@ export class SearchedProductsComponent implements OnInit {
   term: string;
   products: Producto[] = [];
 
+
+  addProdcuctName: string = '';
+
+  addCartSuccess: boolean = false;
+
+  private _success = new Subject<string>();
+
+  staticAlertClosed = true;
+  successMessage = '';
+
+  @ViewChild('staticAlert', { static: false }) staticAlert: NgbAlert = {} as NgbAlert;
+  @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert: NgbAlert = {} as NgbAlert;
+
   constructor(
     private productoService: ProductoService,
     private usuarioService: UsuarioService,
     private ejemplarService: EjemplarService,
+    private searchService: SearchService,
     private router:Router
   ) {
     const arrHref = location.href.split('/');
@@ -28,6 +44,7 @@ export class SearchedProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.searchService.setSearchTerm(this.term)
     this.productoService.getProductByName(this.term)
       .subscribe((response: Producto[]) => {
         this.products = response
@@ -35,6 +52,12 @@ export class SearchedProductsComponent implements OnInit {
           this.countStok(product)
         }
       })
+      this._success.subscribe((message) => (this.successMessage = message));
+      this._success.pipe(debounceTime(10000)).subscribe(() => {
+        if (this.selfClosingAlert) {
+          this.selfClosingAlert.close();
+        }
+      });
   }
   checkDescriptionQuantity(product: Producto): boolean {
     if (product.descripcion) {
@@ -78,6 +101,9 @@ export class SearchedProductsComponent implements OnInit {
       this.router.navigate(['auth/login']);
     }
 
+  }
+  public changeSuccessMessage() {
+    this._success.next(`${new Date()} - Message successfully changed.`);
   }
   private countStok(product: Producto) {
     this.ejemplarService.getUnitsByProductId(product.id)

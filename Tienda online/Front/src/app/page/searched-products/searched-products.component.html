@@ -29,7 +29,7 @@
         </div>
         <div class="col-auto position-relative">
           <button
-            class="btn btn-secondary mb-3 position-relative"
+            class="btn btn-info mb-3 position-relative"
             style="top: 20%"
             type="button"
           >
@@ -37,10 +37,11 @@
           </button>
           <br />
           <button
-            class="btn btn-secondary position-relative"
+            class="btn btn-info position-relative"
             style="top: 20%"
             type="button"
             (click)="addToCart(product)"
+            (click)="changeSuccessMessage()"
           >
             Añadir al carrito
           </button>
@@ -59,3 +60,12 @@
     </h2>
   </div>
 </div>
+<ngb-alert
+  class="position-fixed bottom-0 start-50 translate-middle-x"
+  #selfClosingAlert
+  *ngIf="successMessage"
+  type="info"
+  (closed)="successMessage = ''"
+>
+{{addProdcuctName}} se ha añadido al carrito
+</ngb-alert>

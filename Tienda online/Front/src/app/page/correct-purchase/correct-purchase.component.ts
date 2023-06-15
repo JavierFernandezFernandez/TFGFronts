@@ -94,7 +94,6 @@ export class CorrectPurchaseComponent implements OnInit {
                     { text: 'Total', bold: true },
                   ]
                 ]
-                //let totalPrice: number = 0;
                 for (const invoice of invoices) {
                   console.log(invoice)
                   if (invoice.line) {
@@ -109,7 +108,6 @@ export class CorrectPurchaseComponent implements OnInit {
                           priceMoreIva + '€',
                         ]
                       )
-                      //totalPrice += Number(priceMoreIva);
                     }
 
                   }
@@ -237,7 +235,7 @@ export class CorrectPurchaseComponent implements OnInit {
                           width: 'auto',
                           stack: [
                             {
-                              text: this.totalPrice + '€',
+                              text: this.totalPrice.toFixed(2) + '€',
                               bold: true,
                               alignment: 'right',
                             },
@@ -248,7 +246,7 @@ export class CorrectPurchaseComponent implements OnInit {
                               margin: [0, 10, 0, 0],
                             },
                             {
-                              text: this.totalPrice + '€',
+                              text: this.totalPrice.toFixed(2) + '€',
                               bold: true,
                               alignment: 'right',
                               margin: [0, 10, 0, 0],
