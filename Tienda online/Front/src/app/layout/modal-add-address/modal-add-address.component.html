@@ -1,0 +1,78 @@
+<div class="modal-header">
+  <h4 class="modal-title">Añadir dirección</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="modal.dismiss('Cross click')"
+  ></button>
+</div>
+<form [formGroup]="form" (ngSubmit)="createAddress()">
+  <div class="modal-body">
+    <div class="my-1">
+      <label>Nombre completo</label>
+      <input type="text" class="form-control mb-3" formControlName="name" />
+      <div
+        class="alert alert-danger mt-2"
+        [hidden]="name.valid || name.pristine"
+      >
+        <span *ngIf="name.errors?.['required']">
+          Este campo es obligatorio
+        </span>
+        <span *ngIf="name.errors?.['maxlength']">
+          El nombre completo es demasiado largo
+        </span>
+      </div>
+    </div>
+    <div class="my-1">
+      <label>Ciudad</label>
+      <input type="text" class="form-control mb-3" formControlName="city" />
+      <div
+        class="alert alert-danger mt-2"
+        [hidden]="city.valid || city.pristine"
+      >
+        <span *ngIf="city.errors?.['required']">
+          Este campo es obligatorio
+        </span>
+        <span *ngIf="city.errors?.['maxlength']">
+          El nombre de la ciudad es demasiado largo
+        </span>
+      </div>
+    </div>
+    <div class="my-1">
+      <label>Direccion</label>
+      <input type="text" class="form-control mb-3" formControlName="address" />
+      <div
+        class="alert alert-danger mt-2"
+        [hidden]="address.valid || address.pristine"
+      >
+        <span *ngIf="address.errors?.['required']">
+          Este campo es obligatorio
+        </span>
+        <span *ngIf="address.errors?.['maxlength']">
+          El nombre de la ciudad es demasiado largo
+        </span>
+      </div>
+    </div>
+    <div class="my-1">
+      <label>Codigo postal</label>
+      <input type="text" class="form-control mb-3" formControlName="cp" />
+      <div class="alert alert-danger mt-2" [hidden]="cp.valid || cp.pristine">
+        <span *ngIf="cp.errors?.['required']"> Este campo es obligatorio </span>
+        <span *ngIf="cp.errors?.['pattern']">
+          El dato introducido no es un codigo postal
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-info"
+      (click)="modal.close('Close click')"
+      [disabled]="!form.valid"
+    >
+      A&ntilde;adir
+    </button>
+  </div>
+</form>

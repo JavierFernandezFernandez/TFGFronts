@@ -1,0 +1,42 @@
+.clasificacion {
+  text-align: center;
+}
+
+.clasificacion label {
+  font-size: 50px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  color: grey;
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+label:hover,
+label:hover ~ label {
+  color: orange;
+  text-shadow: 0 0 1rem rgba(255, 162, 0, 0.70) !important;
+}
+
+input[type="radio"]:checked ~ label {
+  color: orange;
+  text-shadow: 0 0 1rem rgba(255, 162, 0, 0.70) !important;
+}
+
+.textStar{
+  color: orange;
+  text-shadow: 0 0 1rem rgba(255, 162, 0, 0.70) !important;
+  font-size: 50px;
+}
+.commentStar{
+  color: orange;
+  text-shadow: 0 0 1rem rgba(255, 162, 0, 0.70) !important;
+  font-size: 25px;
+}

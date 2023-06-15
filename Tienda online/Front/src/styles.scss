@@ -1,0 +1,79 @@
+/* You can add global styles to this file, and also import other style files */
+.bg-custom-gray{
+  background-color: #d7d7d7;
+}
+.px-40 {
+  padding-right: 25rem !important;
+  padding-left: 25rem !important;
+}
+.min-vh-body {
+  min-height: 77.3vh !important;
+}
+
+.min-vh-50 {
+  min-height: 50vh !important;
+}
+.min-vh-20 {
+  min-height: 20vh !important;
+}
+.w-12 {
+  width: 12% !important;
+}
+.w-48 {
+  width: 48% !important;
+}
+.shopping-basket-product{
+  height: fit-content;
+}
+.quantity-selector {
+  width: 115px !important;
+}
+.quantity-display {
+  width: 80px !important;
+  height: 30px !important;
+}
+
+.display-6 {
+  font-size: calc(1.375rem + 0.9vw);
+  font-weight: 300;
+  line-height: 1.2;
+}
+.cursor-p{
+  cursor: pointer;
+}
+.img-search{
+  height: 250px;
+}
+
+.cursor-not-allowed{
+  cursor: not-allowed;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.fs-cusotom-4{
+  font-size: calc(1.25rem + 0.16vw)
+}
+
+.border-gray {
+  --bs-border-opacity: 1;
+  border-color: rgba(var(#d3d3d2), var(--bs-border-opacity)) !important;
+}
+.sticky
+    {
+        position: fixed;
+        top:0;
+        width: 100%;
+        background-color: #fff;
+        padding-right: 20px!important;
+
+    }
+
+@media (min-width: 1200px) {
+  .display-6 {
+    font-size: 2rem;
+  }
+}
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';

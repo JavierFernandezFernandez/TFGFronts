@@ -1,0 +1,334 @@
+<div class="container min-vh-75">
+  <div class="row">
+    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class="container-fluid col-xl-10 col-lg-9 col-md-8 col-sm-8 mt-3">
+      <div class="row">
+        <div class="col-3">
+          <button class="p-0 btn btn-link"></button>
+          <button
+            type="button"
+            class="btn btn-link"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            <img
+              src="../../../assets/img/user-image.png"
+              alt=""
+              class="img-fluid"
+            />
+          </button>
+
+          <!-- ModalImagen -->
+          <div
+            class="modal"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    Modal title
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">...</div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary">
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ms-4 col-4">
+          <input
+            type="text"
+            [className]="'form-control my-3 w-100 ' + cursorNotAllowed"
+            [(ngModel)]="email"
+            [readOnly]="!editing"
+          />
+          <input
+            type="text"
+            [className]="'form-control my-3 w-100 ' + cursorNotAllowed"
+            [(ngModel)]="name"
+            [readonly]="!editing"
+          />
+          <input
+            type="number"
+            class=""
+            [className]="'form-control my-3 w-100 ' + cursorNotAllowed"
+            [(ngModel)]="phone"
+            [readonly]="!editing"
+          />
+          <!-- Boton cambiar contraseña -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="openVerticallyCentered(changePasswordModal)"
+          >
+            Cambiar contrase&ntilde;a
+          </button>
+
+          <!-- Modal -->
+          <ng-template #changePasswordModal let-modal>
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="changePasswordLabel">
+                  Modal title
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modal.dismiss('Cross click')"
+                ></button>
+                <div
+                  class="alert alert-info mt-2"
+                  [hidden]="!editPasswordCorrect"
+                >
+                  Contrase&ntilde;a modificada correctamente
+                </div>
+              </div>
+              <!-- Formulario -->
+              <form [formGroup]="form" (ngSubmit)="changePassword()">
+                <div class="modal-body">
+                  <div class="mb-4">
+                    <label for="actualPassword">Contrase&ntilde;a</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingInput"
+                      formControlName="actualPassword"
+                    />
+                    <div
+                      class="alert alert-danger mt-2"
+                      [hidden]="actualPassword.valid || actualPassword.pristine"
+                    >
+                      <span *ngIf="actualPassword.errors?.['required']">
+                        La contrase&ntilde;a es obligatoria
+                      </span>
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <label for="newPassword">Nueva contrase&ntilde;a</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingInput"
+                      formControlName="newPassword"
+                    />
+                    <div
+                      class="alert alert-danger mt-2"
+                      [hidden]="newPassword.valid || newPassword.pristine"
+                    >
+                      <span *ngIf="newPassword.errors?.['required']">
+                        La contrase&ntilde;a es obligatoria
+                      </span>
+                      <span *ngIf="newPassword.errors?.['minlength']">
+                        La contrase&ntilde;a es demasiado corta
+                      </span>
+                      <span *ngIf="newPassword.errors?.['maxlength']">
+                        La contrase&ntilde;a es demasiado larga
+                      </span>
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <label for="confirmPassword"
+                      >Confirmar contrase&ntilde;a</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingInput"
+                      formControlName="confirmPassword"
+                    />
+                    <div
+                      class="alert alert-danger mt-2"
+                      [hidden]="
+                        confirmPassword.valid || confirmPassword.pristine
+                      "
+                    >
+                      <span *ngIf="confirmPassword.errors?.['required']">
+                        Confirmar la contrase&ntilde;a es obligatoria
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer text-center">
+                  <button
+                    type="submit"
+                    class="btn btn-primary w-100 btn-lg"
+                    (click)="modal.close('Close click')"
+                    [disabled]="!form.valid"
+                  >
+                    Cambiar contrase&ntilde;a
+                  </button>
+                </div>
+              </form>
+            </div>
+          </ng-template>
+        </div>
+        <div class="ms-4 col-4">
+          <!-- Modo visualizacion -->
+          <span *ngIf="!editing">
+            <button class="btn btn-secondary" type="submit" (click)="edit()">
+              <span class="">Editar</span>
+            </button>
+            <br />
+          </span>
+          <!-- Modo edicion -->
+          <span *ngIf="editing">
+            <button
+              class="btn btn-secondary mb-3"
+              type="submit"
+              (click)="saveEdit()"
+            >
+              <span class="">Guardar</span>
+            </button>
+            <br />
+            <button
+              class="btn btn-secondary"
+              type="submit"
+              (click)="cancelEdit()"
+            >
+              <span class="">Cancelar</span>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="row ps-3 pt-4">
+        <!-- Direcciones -->
+        <hr class="w-75">
+        <div class="col-6">
+          <div class="row mb-1">
+            <div class="col-12">
+              <div class="row d-flex position-relative">
+                <!-- Direccion no seleccionada-->
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    (click)="collapseAddress.toggle()"
+                    [attr.aria-expanded]="!isCollapsedAddress"
+                  >
+                    Direcciones de envio
+                  </button>
+                </div>
+              </div>
+              <!-- Collapse de direcciones -->
+              <div class="row">
+                <div
+                  #collapseAddress="ngbCollapse"
+                  [(ngbCollapse)]="isCollapsedAddress"
+                >
+                  <div class="card">
+                    <div class="card-body">
+                      <ul class="mb-0">
+                        <li *ngFor="let address of addresses">
+                          {{
+                            address.nombre +
+                              "," +
+                              address.direccion +
+                              "," +
+                              address.ciudad +
+                              "," +
+                              address.cp
+                          }}
+                        </li>
+                        <button
+                          class="btn btn-info w-auto"
+                          (click)="openVerticallyCentered(modalAddress)"
+                        >
+                          Añadir direcci&oacute;n
+                        </button>
+                        <ng-template #modalAddress let-modal>
+                          <app-modal-add-address
+                            [modal]="modal"
+                            [user]="user"
+                            (selectedAddress)="onSelectedAddressChange($event)"
+                          ></app-modal-add-address>
+                        </ng-template>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Metodo de pago -->
+        <div class="col-6">
+          <div class="row mb-1">
+            <div class="col-12">
+              <div class="d-flex position-relative">
+                <!-- Metodo de pago  no seleccionada-->
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    (click)="collapseUserPaymentMethod.toggle()"
+                    [attr.aria-expanded]="!isCollapsedUserPaymentMethod"
+                  >
+                    M&eacute;todo de pago
+                  </button>
+                </div>
+              </div>
+              <!-- Collapse de metodos de pago -->
+              <div class="row">
+                <div
+                  #collapseUserPaymentMethod="ngbCollapse"
+                  [(ngbCollapse)]="isCollapsedUserPaymentMethod"
+                >
+                  <div class="card">
+                    <div class="card-body">
+                      <ul class="mb-0">
+                        <li *ngFor="let method of userPaymentMethods">
+                          {{ method.datos + "," + method.formaPago.tipo }}
+                        </li>
+                        <button
+                          class="btn btn-info w-auto"
+                          (click)="
+                            openVerticallyCentered(modalUserPaymentMethod)
+                          "
+                        >
+                          Añadir m&eacute;todo de pago
+                        </button>
+                        <ng-template #modalUserPaymentMethod let-modal>
+                          <app-modal-add-user-payment-method
+                            [modal]="modal"
+                            [user]="user"
+                            (selectedUserPaymentMethod)="
+                              onSelectedUserPaymentMethodChange($event)
+                            "
+                          >
+                          </app-modal-add-user-payment-method>
+                        </ng-template>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

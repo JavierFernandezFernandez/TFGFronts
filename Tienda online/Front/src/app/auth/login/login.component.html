@@ -1,0 +1,62 @@
+<div class="container py-4 px-40">
+  <div
+    class="container-fluid border-start border-end min-vh-50 position-static mt-5 pt-5"
+  >
+    <form [formGroup]="form" (ngSubmit)="login($event)">
+      <h2 class="">Iniciar sesi&oacute;n</h2>
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo electr&oacute;nico</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+        />
+        <div
+          class="alert alert-danger mt-2"
+          [hidden]="email.valid || email.pristine"
+        >
+          <span *ngIf="email.errors?.['required']">
+            El correo electr&oacute;nico es obligatorio
+          </span>
+          <span *ngIf="email.errors?.['email']">
+            Formato de correo electr&oacute;nico invalido
+          </span>
+          <span *ngIf="email.errors?.['maxlength']">
+            El correo electr&oacute;nico es demasiado largo
+          </span>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contrase&ntilde;a</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          formControlName="password"
+        />
+        <div
+          class="alert alert-danger mt-2"
+          [hidden]="password.valid || password.pristine"
+        >
+          <span *ngIf="password.errors?.['required']">
+            La contrase&ntilde;a es obligatoria
+          </span>
+          <span *ngIf="password.errors?.['maxlength']">
+            La contrase&ntilde;a es demasiado larga
+          </span>
+        </div>
+      </div>
+      <div class="alert alert-danger mt-2" *ngIf="emailOrPasswordIncorrect">
+        El correo electr&oacute;nico o contraseña son incorrectos
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="record" />
+        <label class="form-check-label" for="record">Recu&eacute;rdame</label>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+        Iniciar sesi&oacute;n
+      </button>
+    </form>
+  </div>
+</div>

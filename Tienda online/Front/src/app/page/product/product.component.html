@@ -1,0 +1,214 @@
+<div class="container min-vh-75">
+  <div class="row mt-3">
+    <div class="col-5">
+      <img
+        src="../../../assets/img/familia-pccom-500x500.webp"
+        alt="producto"
+        class="img-fluid mt-2 rounded-top"
+      />
+    </div>
+    <div class="col-7 text-end">
+      <p class="display-6 fw-bold">{{ product.nombre }}</p>
+      <div class="border-1 border-top border-bottom">
+        <p class="display-4 pt-2 fw-bolder">
+          {{ totalPrice }}
+        </p>
+        <span class="" style="line-height: 2">Cantidad:</span>
+        <div class="ms-1 input-group float-end quantity-selector">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            (click)="lessCuantity()"
+          >
+            -
+          </button>
+          <input
+            type="text"
+            class="form-control text-center"
+            aria-label="Example text with two button addons"
+            [(ngModel)]="product.quantity"
+          />
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            (click)="moreCuantity()"
+          >
+            +
+          </button>
+        </div>
+        <br /><br />
+        <span>Disponibilidad:{{ numberUnits }}</span>
+        <br /><br />
+        <span>Marca: {{ brand.nombre }}</span>
+      </div>
+      <div class="mt-4" *ngIf="numberUnits > 0">
+        <button type="button" class="btn btn-info btn-lg me-2">Comprar</button>
+        <button
+          type="button"
+          class="btn btn-info btn-lg ms-2"
+          (click)="addToCart()"
+          (click)="changeSuccessMessage()"
+        >
+          Añadir al carrito
+        </button>
+        <!-- <div class="alert-info" *ngIf="addCartSuccess">
+          <p>Producto añadido al carrito</p>
+        </div> -->
+      </div>
+      <div class="mt-4" *ngIf="numberUnits <= 0">
+        <h3>Sin stock</h3>
+      </div>
+    </div>
+  </div>
+  <div class="row m-3">
+    <h2>Descripci&oacute;n</h2>
+    <p>{{ product.descripcion }}</p>
+  </div>
+  <!-- Comentarios -->
+  <div class="row m-3">
+    <div class="row">
+      <div class="col-2">
+        <h2>Comentarios</h2>
+        <h3>
+          <span class="textStar">&starf;</span>{{ averageNote.toFixed(1) }} de 5
+        </h3>
+        <p>{{ comments.length }} comentarios</p>
+      </div>
+      <!-- Button añadir comentario -->
+
+      <div class="col-auto">
+        <button
+          type="button"
+          class="btn btn-lg btn-secondary w-auto ms-2 position-relative top-50"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+          (click)="openModalComment(commentModal)"
+        >
+          Comenta este producto
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal añadir comentario -->
+    <ng-template #commentModal let-modal>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">
+            Comentar producto
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="modal.dismiss('Cross click')"
+          ></button>
+        </div>
+        <!-- Formulario -->
+        <form id="form" (ngSubmit)="postComment(title, messaje)">
+          <div class="modal-body">
+            <p class="clasificacion">
+              <input
+                id="radio1"
+                type="radio"
+                name="option"
+                [(ngModel)]="stars"
+                value="5"
+              />
+              <label for="radio1">&starf;</label>
+              <input
+                id="radio2"
+                type="radio"
+                name="option"
+                [(ngModel)]="stars"
+                value="4"
+              />
+              <label for="radio2">&starf;</label>
+              <input
+                id="radio3"
+                type="radio"
+                name="option"
+                [(ngModel)]="stars"
+                value="3"
+              />
+              <label for="radio3">&starf;</label>
+              <input
+                id="radio4"
+                type="radio"
+                name="option"
+                [(ngModel)]="stars"
+                value="2"
+              />
+              <label for="radio4">&starf;</label>
+              <input
+                id="radio5"
+                type="radio"
+                name="option"
+                [(ngModel)]="stars"
+                value="1"
+              />
+              <label for="radio5">&starf;</label>
+            </p>
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control mb-4"
+                id="floatingInput"
+                #title
+              />
+              <label for="floatingInput">
+                Escibe aqu&iacute; el titulo de tu comentario
+              </label>
+            </div>
+            <div class="form-floating">
+              <textarea
+                class="form-control mb-4"
+                id="floatingTextarea2"
+                style="height: 100px"
+                #messaje
+              ></textarea>
+              <label for="floatingTextarea2">
+                Escibe aqu&iacute; tu comentario sobre el producto
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer text-center">
+            <button
+              type="submit"
+              class="btn btn-primary w-100 btn-lg"
+              (click)="modal.close('Close click')"
+              [disabled]="!title.value || !messaje.value"
+            >
+              Publicar comentario
+            </button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+    <div class="mx-0 mb-1 row">
+      <div
+        class="card w-48 min-vh-20 m-2"
+        style="width: 18rem"
+        *ngFor="let comment of comments"
+      >
+        <div class="card-body">
+          <span class="fw-bold">{{ comment.usuario.nombre }}</span>
+          <h5 class="card-title">{{ comment.titulo }}</h5>
+          <h5 class="card-title">
+            <span class="commentStar">&starf;</span>{{ comment.puntuacion }}
+          </h5>
+          <p class="card-text">
+            {{ comment.mensaje }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngb-alert
+  class="position-fixed bottom-0 start-50 translate-middle-x"
+  #selfClosingAlert
+  *ngIf="successMessage"
+  type="info"
+  (closed)="successMessage = ''"
+>
+{{product.nombre}} se ha añadido al carrito
+</ngb-alert>

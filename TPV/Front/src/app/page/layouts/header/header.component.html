@@ -1,0 +1,42 @@
+<header class="pt-3 bg-info border-bottom border-dark">
+  <!-- Encabezado -->
+  <div class="pb-2 border-bottom border-dark">
+    <div class="container">
+      <div
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+      >
+        <a
+          class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none"
+        >
+          <img
+            src="../../assets/img/Logo.png"
+            class="bi me-2 "
+            width="60"
+            height="32"
+            role="img"
+            aria-label="Bootstrap"
+          />
+        </a>
+        <button class="ms-5 fw-bold text-decoration-none text-dark btn btn-link" (click)="productos()">Inicio</button>
+        <button class="ms-1 fw-bold text-decoration-none text-dark btn btn-link" (click)="pedidos()">Pedidos</button>
+        <button class="ms-1 fw-bold text-decoration-none text-dark btn btn-link" (click)="pedidosOnline()">Pedidos Online</button>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        </ul>
+        <div class="float-end">
+
+          <strong class="">{{empleado.nombre}}</strong> <img
+          src="../../assets/img/Sample_User_Icon.png"
+          class="bi me-3"
+          width="40"
+          height="32"
+          role="img"
+          aria-label="Bootstrap"
+          />
+          <a class=" float-end fw-bold  text-decoration-none text-dark" href="#" (click)="closeSesion()">Cerrar sesión</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>

@@ -1,0 +1,264 @@
+<div class="container pt-4">
+  <div class="row">
+    <div class="col-7">
+      <!-- Direcciones -->
+      <div class="row mb-1">
+        <div class="col-3">
+          <p class="fs-cusotom-4 fw-bold">Direcci&oacute;n de env&iacute;o</p>
+        </div>
+        <div class="col-8">
+          <div class="row d-flex position-relative">
+            <!-- Direccion no seleccionada-->
+            <div *ngIf="!selectedAddress">
+              <button
+                type="button"
+                class="btn btn-info"
+                (click)="collapseAddress.toggle()"
+                [attr.aria-expanded]="!isCollapsedAddress"
+              >
+                Seleccionar direcci&oacute;n
+              </button>
+            </div>
+            <!-- Direccion seleccionada -->
+            <div *ngIf="selectedAddress">
+              <ul class="list-unstyled fw-semibold mt-2">
+                <li>{{ selectedAddress.nombre }}</li>
+                <li>{{ selectedAddress.direccion }}</li>
+                <li>{{ selectedAddress.ciudad }}, {{ selectedAddress.cp }}</li>
+              </ul>
+              <div class="position-absolute end-0 top-0">
+                <button
+                  type="button"
+                  class="btn btn-info w-auto mt-2"
+                  (click)="collapseAddress.toggle()"
+                  [attr.aria-expanded]="!isCollapsedAddress"
+                >
+                  Cambiar direccion
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Collapse de direcciones -->
+          <div class="row">
+            <div
+              #collapseAddress="ngbCollapse"
+              [(ngbCollapse)]="isCollapsedAddress"
+            >
+              <div class="card">
+                <div class="card-body">
+                  <ul class="list-unstyled mb-0">
+                    <li *ngFor="let address of addresses">
+                      <input
+                        type="radio"
+                        name="address"
+                        value="{{ address.id }}"
+                        [(ngModel)]="roundedAddressId"
+                      />
+                      {{
+                        address.nombre +
+                          "," +
+                          address.direccion +
+                          "," +
+                          address.ciudad +
+                          "," +
+                          address.cp
+                      }}
+                    </li>
+
+                    <button
+                      class="btn btn-info w-auto"
+                      (click)="openVerticallyCentered(modalAddress)"
+                    >
+                      Añadir direcci&oacute;n
+                    </button>
+                    <ng-template #modalAddress let-modal>
+                      <app-modal-add-address
+                        [modal]="modal"
+                        [user]="user"
+                        (selectedAddress)="onSelectedAddressChange($event)"
+                      ></app-modal-add-address>
+                    </ng-template>
+                  </ul>
+                </div>
+                <div class="card-footer text-start">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    (click)="collapseAddress.toggle()"
+                    [attr.aria-expanded]="!isCollapsedAddress"
+                    aria-controls="collapseExample"
+                    (click)="selectAddress()"
+                    [disabled]="!roundedAddressId"
+                  >
+                    Enviar a esta direcci&oacute;n
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Metodo de pago -->
+      <div class="row mb-1">
+        <div class="col-3">
+          <p class="fs-cusotom-4 fw-bold">M&eacute;todo de pago</p>
+        </div>
+        <div class="col-8">
+          <div class="d-flex position-relative">
+            <!-- Metodo de pago  no seleccionada-->
+            <div *ngIf="!selectedUserPaymentMethod">
+              <button
+                type="button"
+                class="btn btn-info"
+                (click)="collapseUserPaymentMethod.toggle()"
+                [attr.aria-expanded]="!isCollapsedUserPaymentMethod"
+              >
+                Seleccionar m&eacute;todo de pago
+              </button>
+            </div>
+            <!-- Metodo de pago seleccionada -->
+            <div *ngIf="selectedUserPaymentMethod">
+              <ul class="list-unstyled fw-semibold mt-2">
+                <li>{{ selectedUserPaymentMethod.datos }}</li>
+                <li>{{ selectedUserPaymentMethod.formaPago.tipo }}</li>
+              </ul>
+
+              <div class="position-absolute end-0 top-0">
+                <button
+                  type="button"
+                  class="btn btn-info w-auto mt-2"
+                  (click)="collapseUserPaymentMethod.toggle()"
+                  [attr.aria-expanded]="!isCollapsedUserPaymentMethod"
+                >
+                  Cambiar metodo de pago
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Collapse de metodos de pago -->
+          <div class="row">
+            <div
+              #collapseUserPaymentMethod="ngbCollapse"
+              [(ngbCollapse)]="isCollapsedUserPaymentMethod"
+            >
+              <div class="card">
+                <div class="card-body">
+                  <ul class="list-unstyled mb-0">
+                    <li *ngFor="let method of userPaymentMethods">
+                      <input
+                        type="radio"
+                        name="method"
+                        value="{{ method.id }}"
+                        [(ngModel)]="roundedUserPaymentMethodId"
+                      />
+                      {{ method.datos + "," + method.formaPago.tipo }}
+                    </li>
+                    <button
+                      class="btn btn-info w-auto"
+                      (click)="openVerticallyCentered(modalUserPaymentMethod)"
+                    >
+                      Añadir m&eacute;todo de pago
+                    </button>
+                    <ng-template #modalUserPaymentMethod let-modal>
+                      <app-modal-add-user-payment-method
+                        [modal]="modal"
+                        [user]="user"
+                        (selectedUserPaymentMethod)="
+                          onSelectedUserPaymentMethodChange($event)
+                        "
+                      >
+                      </app-modal-add-user-payment-method>
+                    </ng-template>
+                  </ul>
+                </div>
+                <div class="card-footer text-start">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    (click)="collapseUserPaymentMethod.toggle()"
+                    [attr.aria-expanded]="!isCollapsedUserPaymentMethod"
+                    aria-controls="collapseExample"
+                    (click)="selectUserPaymentMethod()"
+                    [disabled]="!roundedUserPaymentMethodId"
+                  >
+                    Usar este metodo de pago
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-11">
+            <p class="fs-cusotom-4 fw-bold">Productos</p>
+            <div class="row col-auto">
+              <div
+                class="rounded-2 border shopping-basket-product mb-2"
+                *ngFor="let product of cart"
+              >
+                <div class="float-start w-50">
+                  <img
+                    src="../../../assets/img/familia-pccom-500x500.webp"
+                    alt=""
+                    class="w-25 me-4 float-start my-1 rounded"
+                  />
+                  <div class="row">
+                    <h3 class="float-start p-0">{{ product.nombre }}</h3>
+                  </div>
+                  <div calss="row">
+                    <h5 class="float-start">
+                      {{ priceWithIva(product).toFixed(2) }}€
+                    </h5>
+                  </div>
+                  <br />
+                  <div calss="row">
+                    <input
+                      type="text"
+                      class="form-control text-center quantity-display mt-2"
+                      aria-label="Example text with two button addons"
+                      value="Cant: {{ product.quantity }}"
+                      #quantity
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Resumen -->
+    <div class="col-4">
+      <div class="rounded-2 border p-2">
+        <h3>Resumen</h3>
+        <div class="border-top border-bottom border-1 py-2">
+          <div class="fw-bold">
+            <div class="display-7 fw-bold">
+              <span>Productos</span
+              ><span class="float-end">{{ totalPrice() }}€</span>
+            </div>
+            <div class="fw-bold">
+              <span>Envio</span><span class="float-end">0€</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="display-7 fw-bold">
+            <span>Total</span><span class="float-end">{{totalPrice()}}€</span>
+          </div>
+        </div>
+        <div class="text-center my-2">
+          <button
+            type="button"
+            class="btn btn-primary btn-lg me-2 w-100"
+            (click)="makePurchase()"
+            [disabled]="!selectedAddress || !selectedUserPaymentMethod"
+          >
+            Comprar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

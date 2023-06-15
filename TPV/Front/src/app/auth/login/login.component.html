@@ -1,0 +1,68 @@
+<div class="container px-40">
+  <div class="container-fluid rounded position-static px-5">
+
+    <div class="cantainer text-center">
+      <img src="../../assets/img/Logo.png" class="img-fluid w-25 mt-5" >
+    </div>
+    <form [formGroup]="form" (ngSubmit)="login($event)">
+      <h1 class="display-1 text-center"><strong>Iniciar sesi&oacute;n</strong></h1>
+      <br>
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo electr&oacute;nico</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+        />
+        <div
+          class="alert alert-danger mt-2"
+          [hidden]="email.valid || email.pristine"
+        >
+          <span *ngIf="email.errors?.['required']">
+            El correo electr&oacute;nico es obligatorio
+          </span>
+          <span *ngIf="email.errors?.['email']">
+            Formato de correo electr&oacute;nico invalido
+          </span>
+          <span *ngIf="email.errors?.['maxlength']">
+            El correo electr&oacute;nico es demasiado largo
+          </span>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contrase&ntilde;a</label>
+        <input
+          [type]="typeImputPassword"
+          class="form-control"
+          id="password"inicio
+          formControlName="password"
+        />
+        <div
+          class="alert alert-danger mt-2"
+          [hidden]="password.valid || password.pristine"
+        >
+          <span *ngIf="password.errors?.['required']">
+            La contrase&ntilde;a es obligatoria
+          </span>
+          <span *ngIf="password.errors?.['maxlength']">
+            La contrase&ntilde;a es demasiado larga
+          </span>
+        </div>
+      </div>
+      <div class="alert alert-danger mt-2" *ngIf="emailOrPasswordIncorrect">
+        El correo electr&oacute;nico o contraseña son incorrectos
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" #imputChangeTypePassword (change)="changeTypePassword(imputChangeTypePassword)" />
+        <label class="form-check-label" for="record">Mostrar contrase&ntilde;a</label>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-info btn-lg w-50 p-3" [disabled]="form.invalid">
+        Iniciar sesi&oacute;n
+      </button>
+      </div>
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="container min-vh-75">
+  <div class="row">
+    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class="col-xl-10 col-lg-9 col-md-8 col-sm-8 p-3">
+      <div class="card w-100 my-2" *ngFor="let order of orders">
+        <div class="card-header">
+          <div class="row border-bottom">
+            <div class="col-lg-2 col-md-4 col-sm-4">
+              <p class="m-0 fw-bold">Fecha:</p>
+              <p>{{ order.fecha }}</p>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4">
+              <p class="m-0 fw-bold">Nº pedido:</p>
+              <p>{{ order.id }}</p>
+            </div>
+            <div class="col-lg-6 col-md-4 col-sm-4">
+              <p class="m-0 fw-bold">Estado:</p>
+              <p>{{ order.estado }}</p>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4">
+              <p class="m-0 fw-bold">Total:</p>
+              <p>{{ order.totalPrice}}€</p>
+            </div>
+          </div>
+          <div class="row p-2">
+            <button class="btn btn-info w-auto" (click)="generateFactura(order)">
+              Factura
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div
+            class="shopping-basket-product mb-2"
+            *ngFor="let line of order.lines"
+          >
+            <div class="float-start w-100 border rounded-2 my-2">
+              <img
+                src="../../../assets/img/familia-pccom-500x500.webp"
+                alt=""
+                width="15%"
+                class="me-4 float-start my-1 rounded"
+              />
+              <div class="row">
+                <h3 class="float-start p-0">
+                  <a href="{{ line.producto.id }}" class="text-dark">
+                    {{ line.producto.nombre }}
+                  </a>
+                </h3>
+              </div>
+              <div calss="row">
+                <h5 class="float-start">
+                  {{ priceWithIva(line.producto).toFixed(2) }}€
+                </h5>
+              </div>
+              <br />
+              <div calss="row">
+                <input
+                  type="text"
+                  class="form-control text-center quantity-display mt-2"
+                  aria-label="Example text with two button addons"
+                  value="Cant: {{ line.unidades }}"
+                  #quantity
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

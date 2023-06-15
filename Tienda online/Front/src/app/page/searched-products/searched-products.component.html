@@ -1,0 +1,61 @@
+<div class="container pb-3">
+  <div class="container-fluid">
+    <div class="" *ngFor="let product of products">
+      <div
+        class="row border border-dark border-2 rounded-4 mt-3"
+        *ngIf="product.units && product.units.length > 0"
+      >
+        <div class="col-3 m">
+          <a href="{{ product.id }}">
+            <img
+              src="../../../assets/img/familia-pccom-500x500.webp"
+              alt=""
+              class="img-search"
+            />
+          </a>
+        </div>
+        <div class="col-6">
+          <a href="{{ product.id }}" class="text-decoration-none text-dark">
+            <div class="row my-2">
+              <h2>{{ product.nombre }}</h2>
+            </div>
+          </a>
+          <div class="row">
+            <h5>
+              {{ product.descripcion | slice : 0 : 297
+              }}<span *ngIf="checkDescriptionQuantity(product)">...</span>
+            </h5>
+          </div>
+        </div>
+        <div class="col-auto position-relative">
+          <button
+            class="btn btn-secondary mb-3 position-relative"
+            style="top: 20%"
+            type="button"
+          >
+            <span class="">Comprar</span>
+          </button>
+          <br />
+          <button
+            class="btn btn-secondary position-relative"
+            style="top: 20%"
+            type="button"
+            (click)="addToCart(product)"
+          >
+            Añadir al carrito
+          </button>
+          <div
+            class="alert-info position-relative"
+            *ngIf="product.addCartSuccess"
+            style="top: 20%"
+          >
+            <p>Producto añadido al carrito</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h2 *ngIf="products.length == 0">
+      No se han encontrado resultados (╯‵□′)╯︵┻━┻
+    </h2>
+  </div>
+</div>

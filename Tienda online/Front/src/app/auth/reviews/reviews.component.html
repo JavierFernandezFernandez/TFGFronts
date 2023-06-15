@@ -1,0 +1,47 @@
+<div class="container min-vh-75">
+  <div class="row">
+    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class="col-xl-10 col-lg-9 col-md-8 col-sm-8 p-3">
+      <div class="mx-0 mb-1 row">
+        <div
+          class="card w-100 min-vh-20 m-2"
+          style="width: 18rem"
+          *ngFor="let comment of comments"
+        >
+          <div class="card-body p-1">
+            <div class="row">
+              <div class="col-6">
+                <img
+                  src="../../../assets/img/familia-pccom-500x500.webp"
+                  alt=""
+                  width="40%"
+                  class="me-1 float-start my-1 rounded"
+                />
+                <div class="row">
+                  <h4 class="float-start p-0">
+                    <a href="{{ comment.producto.id }}" class="text-dark">
+                      {{ comment.producto.nombre }}
+                    </a>
+                  </h4>
+                </div>
+              </div>
+              <div class="col-6">
+                <span class="fw-bold">{{ comment.usuario.nombre }}</span>
+                <h5 class="card-title">{{ comment.titulo }}</h5>
+                <h5 class="card-title">
+                  <span class="commentStar">&starf;</span
+                  >{{ comment.puntuacion }}
+                </h5>
+                <p class="card-text">
+                  {{ comment.mensaje }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

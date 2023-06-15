@@ -1,0 +1,192 @@
+<div class="modal-header">
+  <h4 class="modal-title">Añadir metodo de pago</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="modal.dismiss('Cross click')"
+  ></button>
+</div>
+<div class="modal-body">
+  <select class="form-select" (change)="selectPaymentMethod(method)" #method>
+    <option hidden selected>Escoge una forma de pago</option>
+    <option *ngFor="let method of paymentMethods" value="{{ method.id }}">
+      {{ method.tipo }}
+    </option>
+  </select>
+</div>
+<form
+  *ngIf="selectedPaymentMethod == 3"
+  [formGroup]="formCD"
+  (ngSubmit)="createUserPaymentForm()"
+>
+  <div class="modal-body pt-0">
+    <div class="row">
+      <div class="my-1">
+        <label>Numero de tarjeta</label>
+        <input
+          type="text"
+          class="form-control mb-3"
+          formControlName="cardMumber"
+          placeholder="**** **** **** ****"
+        />
+        <div
+          class="alert alert-danger mt-2"
+          [hidden]="cardMumber.valid || cardMumber.pristine"
+        >
+          <span *ngIf="cardMumber.errors?.['required']">
+            Este campo es obligatorio
+          </span>
+          <span *ngIf="cardMumber.errors?.['pattern']">
+            El dato introducido no es una numero de tarjeta de credito o devito
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="my-1">
+          <label>Fecha de expiración:</label>
+          <input
+            type="text"
+            class="form-control mb-3"
+            formControlName="expirationDate"
+            placeholder="MM/AA"
+          />
+          <div
+            class="alert alert-danger mt-2"
+            [hidden]="expirationDate.valid || expirationDate.pristine"
+          >
+            <span *ngIf="expirationDate.errors?.['required']">
+              Este campo es obligatorio
+            </span>
+            <span *ngIf="expirationDate.errors?.['pattern']">
+              El dato introducido no es una numero de tarjeta de credito o
+              devito
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="my-1">
+          <label>CVV:</label>
+          <input
+            type="text"
+            class="form-control mb-3"
+            formControlName="cvv"
+            placeholder="CVV"
+          />
+          <div
+            class="alert alert-danger mt-2"
+            [hidden]="cvv.valid || cvv.pristine"
+          >
+            <span *ngIf="cvv.errors?.['required']">
+              Este campo es obligatorio
+            </span>
+            <span *ngIf="cvv.errors?.['pattern']">
+              El dato introducido no es un codigo postal
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-info"
+      (click)="modal.close('Close click')"
+      [disabled]="!formCD.valid"
+    >
+      A&ntilde;adir
+    </button>
+  </div>
+</form>
+
+<form
+  *ngIf="selectedPaymentMethod == 4"
+  [formGroup]="formPaypal"
+  (ngSubmit)="createUserPaymentForm()"
+>
+  <div class="modal-body pt-0">
+    <div class="row">
+      <div class="my-1">
+        <label>Numero de un email</label>
+        <input
+          type="text"
+          class="form-control mb-3"
+          formControlName="email"
+          placeholder="Ej: paypal@example.com"
+        />
+        <div
+          class="alert alert-danger mt-2"
+          [hidden]="email.valid || email.pristine"
+        >
+          <span *ngIf="email.errors?.['required']">
+            Este campo es obligatorio
+          </span>
+          <span *ngIf="email.errors?.['email']">
+            El dato introducido no es un correo electronico
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-info"
+      (click)="modal.close('Close click')"
+      [disabled]="!formPaypal.valid"
+    >
+      A&ntilde;adir
+    </button>
+  </div>
+</form>
+
+<form
+  *ngIf="selectedPaymentMethod == 5"
+  [formGroup]="formBizum"
+  (ngSubmit)="createUserPaymentForm()"
+>
+  <div class="modal-body pt-0">
+    <div class="row">
+      <div class="my-1">
+        <label>Numero de telefono</label>
+        <input
+          type="text"
+          class="form-control mb-3"
+          formControlName="phone"
+          placeholder="Ej: 612345678"
+        />
+        <div
+          class="alert alert-danger mt-2"
+          [hidden]="phone.valid || phone.pristine"
+        >
+          <span *ngIf="phone.errors?.['required']">
+            Este campo es obligatorio
+          </span>
+          <span *ngIf="phone.errors?.['pattern']">
+            El dato introducido no es una numero de telefono
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-info"
+      (click)="modal.close('Close click')"
+      [disabled]="!formBizum.valid"
+    >
+      A&ntilde;adir
+    </button>
+  </div>
+</form>
+
+<div class="modal-footer" *ngIf="selectedPaymentMethod == 0">
+  <button type="submit" class="btn btn-info" [disabled]="true">
+    A&ntilde;adir
+  </button>
+</div>

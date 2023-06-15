@@ -1,0 +1,145 @@
+<div class="container mt-3">
+  <div class="mt-3 p-5 border rounded shadow">
+    <h1 class="text-center mb-4">Lista Pedidos Online</h1>
+
+    <ng-container *ngIf="datosCargados">
+      <table datatable [dtOptions]="dtOptions" class="row-border hover">
+        <thead>
+          <tr>
+            <th>N&uacute;mero De Pedido</th>
+            <th>Fecha Pedido</th>
+            <th>Fecha Entrega Prevista</th>
+            <th>Estado Del Pedido</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let pedido of pedidos">
+            <td>{{ pedido.id }}</td>
+            <td>{{ pedido.fecha }}</td>
+            <td>{{ pedido.fechaEntrega }}</td>
+            <td>{{ pedido.estado }}</td>
+            <td>
+              <!-- Button trigger modal -->
+              <button
+                type="button"
+                class="btn btn-info"
+                (click)="openVerticallyCentered(pedidoModal)"
+                (click)="getOrdersLineByOrder(pedido.id)"
+              >
+                Mas Informaci&oacute;n
+              </button>
+
+              <!-- Modal -->
+              <ng-template #pedidoModal let-modal>
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                      Informaci&oacute;n Pedido
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      (click)="modal.dismiss('Cross click')"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Unidades</th>
+                          <th scope="col">Precio</th>
+                          <th scope="col">IVA</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let linea of lineasPedidos">
+                          <td>{{ linea.producto.nombre }}</td>
+                          <td>{{ linea.unidades }}</td>
+                          <td>{{ linea.precio }}</td>
+                          <td>{{ linea.iva }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <hr />
+
+                    <div>
+                      <h5>Modificar Estado Del Producto</h5>
+
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions"
+                          value="reparto"
+                          [(ngModel)]="estadoEnvio"
+                        />
+                        <label class="form-check-label" for="inlineRadio1"
+                          >En Reparto</label
+                        >
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions"
+                          value="entregado"
+                          [(ngModel)]="estadoEnvio"
+                        />
+                        <label class="form-check-label" for="inlineRadio2"
+                          >Entregado</label
+                        >
+                      </div>
+
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions"
+                          value="tienda"
+                          [(ngModel)]="estadoEnvio"
+                        />
+                        <label class="form-check-label" for="inlineRadio2">
+                          Recogida En Tienda
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer ">
+                    <button
+                      type="button"
+                      class="btn btn-info position-absolute start-0 ms-3"
+                      *ngIf="!estadoEnvio"
+                      disabled
+                    >
+                      Actualizar Estado Del Pedido
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn btn-info position-absolute start-0  ms-3"
+                      *ngIf="estadoEnvio"
+                      (click)="actualizarPedido(lineasPedidos[0].pedido.id)"
+                    >
+                      Actualizar Estado Del Pedido
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      (click)="modal.close('Close click')"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </div>
+</div>

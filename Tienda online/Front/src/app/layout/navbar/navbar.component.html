@@ -1,0 +1,159 @@
+<div class=" bg-info border-bottom border-dark">
+  <!-- Encabezado -->
+  <div class="border-bottom border-dark">
+    <div class="container">
+      <div
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+      >
+        <a
+          href="/"
+          class="d-flex align-items-center text-dark text-decoration-none"
+        >
+          <img
+            src="../assets/img/Logo.png"
+            width="70"
+            height="70"
+            class="img-fluid"
+            aria-label="Bootstrap"
+          />
+          <img
+            src="../assets/img/Nombre.png"
+            width="140"
+            class="img-fluid"
+            aria-label="Bootstrap"
+          />
+        </a>
+        <ul
+          class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
+        >
+        </ul>
+        <!-- sesion iniciada -->
+        <div class="float-end" *ngIf="isLoggedIn">
+          <a href="shopping_cart" class="cursor-pointer">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              fill="currentColor float-end"
+              class="bi bi-cart3"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+              />
+            </svg>
+            <span class="fw-bold fs-4 float-end text-decoration-none text-dark"
+              >Carrito</span
+            >
+          </a>
+          <div class="dropdown text-end float-start me-3" ngbDropdown>
+            <a
+              class="d-block link-dark text-decoration-none dropdown-toggle cursor-pointer"
+              id="userDropdown"
+              ngbDropdownToggle
+            >
+              <img
+                src="../../../assets/img/user-image.png"
+                alt="mdo"
+                width="36"
+                height="36"
+                class="rounded-circle border border-dark border-1"
+              />
+              <span
+                class="fw-bold fs-4 float-end text-decoration-none text-dark"
+                >{{ this.name | slice : 0 : 8 }}</span
+              >
+            </a>
+
+            <ul
+              class="dropdown-menu"
+              ngbDropdownMenu
+              aria-labelledby="userDropdown"
+            >
+              <li>
+                <a class="dropdown-item" href="/auth/data-user">Mis datos</a>
+              </li>
+              <li><a class="dropdown-item disabled">Lista de deseos</a></li>
+              <li><a class="dropdown-item" href="/auth/orders">Pedidos</a></li>
+              <li>
+                <a class="dropdown-item" href="/auth/reviews">Opiniones</a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item" href="#" (click)="closeSesion()"
+                  >Cerrar sesión</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- sesion NO iniciada -->
+        <div class="text-end" *ngIf="!isLoggedIn">
+          <button
+            type="button"
+            class="btn btn-secondary me-2"
+            routerLink="auth/login"
+          >
+            Iniciar sesi&oacute;n
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            routerLink="auth/registration"
+          >
+            Registrarse
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- SubEncabezado -->
+  <div class="pt-2 pb-1 bg-white bg-opacity-50">
+    <div class="container d-flex">
+      <div class="dropdown" ngbDropdown>
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="categoriesDropdown"
+          ngbDropdownToggle
+        >
+          Categorías
+        </button>
+
+        <ul
+          class="dropdown-menu"
+          ngbDropdownMenu
+          aria-labelledby="categoriesDropdown"
+        >
+          <li *ngFor="let categoy of categories">
+            <a class="dropdown-item disabled">{{categoy.nombre}}</a>
+          </li>
+        </ul>
+      </div>
+
+      <form class="w-100 ms-3 pe-0" (submit)="search(therm)">
+        <input
+          #therm
+          type="text"
+          class="form-control"
+          placeholder="Buscar..."
+        />
+      </form>
+      <a (click)="search(therm)">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="26"
+          height="26"
+          fill="currentColor"
+          class="position-relative text-dark"
+          style="right: 33px; top: 5px"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
