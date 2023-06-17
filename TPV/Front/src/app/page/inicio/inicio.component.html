@@ -86,7 +86,7 @@
             aria-labelledby="staticBackdropLabel"
             aria-hidden="true"
           >
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
                   <h1 class="modal-title fs-5" id="staticBackdropLabel">
@@ -228,7 +228,7 @@
     (click)="openVerticallyCentered(pedidoModal)"
     (click)="cierreCaja()"
   >
-    Mas Informaci&oacute;n
+    Cierre de caja
   </button>
 
   <!-- Modal -->
@@ -240,10 +240,9 @@
         </h5>
         <button
           type="button"
-          class="close"
+          class="btn-close"
           (click)="modal.dismiss('Cross click')"
         >
-          <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">

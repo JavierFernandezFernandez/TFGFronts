@@ -64,35 +64,37 @@
                       </tbody>
                     </table>
 
-                    <hr />
+                    <div *ngIf="pedido.estado != 'entregado'">
+                      <hr />
 
-                    <div>
-                      <h5>Modificar Estado Del Producto</h5>
+                      <div>
+                        <h5>Modificar Estado Del Producto</h5>
 
-                      <div class="form-check form-check-inline">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="inlineRadioOptions"
-                          value="reparto"
-                          [(ngModel)]="estadoEnvio"
-                        />
-                        <label class="form-check-label" for="inlineRadio1"
-                          >En Reparto</label
-                        >
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="inlineRadioOptions"
-                          value="entregado"
-                          [(ngModel)]="estadoEnvio"
-                        />
-                        <label class="form-check-label" for="inlineRadio2"
-                          >Entregado</label
-                        >
-                      </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="inlineRadioOptions"
+                            value="reparto"
+                            [(ngModel)]="estadoEnvio"
+                          />
+                          <label class="form-check-label" for="inlineRadio1"
+                            >En Reparto</label
+                          >
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="inlineRadioOptions"
+                            value="entregado"
+                            [(ngModel)]="estadoEnvio"
+                          />
+                          <label class="form-check-label" for="inlineRadio2"
+                            >Entregado</label
+                          >
+                        </div>
+                    </div>
 
                       <div class="form-check form-check-inline">
                         <input

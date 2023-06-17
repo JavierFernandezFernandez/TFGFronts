@@ -1,6 +1,6 @@
 <div class="container mt-3">
   <div class="mt-3 p-5 border rounded shadow">
-    <h1 class="text-center mb-4">Lista Pedidos</h1>
+    <h1 class="text-center mb-4">Historial Pedidos</h1>
 
     <ng-container *ngIf="datosCargados">
       <table datatable [dtOptions]="dtOptions" class="row-border hover">
@@ -26,7 +26,7 @@
                 (click)="openVerticallyCentered(pedidoModal)"
                 (click)="getOrdersLineByOrder(pedido.id)"
               >
-                Mas Informaci&oacute;n
+                M&aacute;s Informaci&oacute;n
               </button>
 
               <!-- Modal -->
